@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-function Card({ id, handleClick, move, englishName, chineseName, defaultIsFlipped = false, imgUrl = "", describe = "" }: { id: number, handleClick: Function, defaultIsFlipped?: boolean, move: { x: number, y: number }, englishName: string, chineseName: string, imgUrl?: string, describe: string }) {
+function Card({ id, handleClick, move, englishName, chineseName, defaultIsFlipped = false, imgUrl = ""}: { id: number, handleClick: Function, defaultIsFlipped?: boolean, move: { x: number, y: number }, englishName: string, chineseName: string, imgUrl?: string, describe: string }) {
     const cardRef = useRef<HTMLDivElement>(null);
     const [angle, setAngle] = useState<number>(0);
     const bX = -300
