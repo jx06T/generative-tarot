@@ -28,6 +28,7 @@ import LoadingAnimation from './components/LoadingAnimation';
 //     "describe": "一包神奇的方便面，让你瞬间飞到游戏地图的另一边！但可能会有点晕。",
 //     "keywords": "noodles"
 //   }]
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
 
 function App() {
   const fortuneTellingQuestions = [
@@ -61,12 +62,12 @@ function App() {
     setLoading(true)
     const options = { method: 'GET', headers: { 'User-Agent': 'insomnia/10.3.0' } };
     // fetch('http://127.0.0.1:5000/randomcard', options)
-    fetch('https://generative-tarot-server.vercel.app/randomcard', options)
-    .then(response => response.json())
-    .then(response => {
-      setTarotCards(response.response.cards)
-      setLoading(false)
-      console.log(response.response.cards)
+    fetch(API_URL + '/randomcard', options)
+      .then(response => response.json())
+      .then(response => {
+        setTarotCards(response.response.cards)
+        setLoading(false)
+        console.log(response.response.cards)
       })
       .catch(err => console.error(err));
   }
@@ -81,8 +82,8 @@ function App() {
       })
     };
 
-    fetch('https://generative-tarot-server.vercel.app/reader', options)
-    // fetch('http://127.0.0.1:5000/reader', options)
+    fetch(API_URL + '/reader', options)
+      // fetch('http://127.0.0.1:5000/reader', options)
       .then(response => response.json())
       .then(response => {
         console.log(response.response)
@@ -121,7 +122,12 @@ function App() {
       <div className=' absolute top-0 w-full h-full left-0 right-0 -z-10 pointer-events-none overflow-hidden bg-st'>
       </div>
       {tarotCards.length > 0 &&
-        < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
+        <>
+          < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
+          <div className=' w-full px-10 z-[60] absolute top-64'>
+            <StreamText className=' text-white h-fit ' text={"滑動卡牌上半部檢視所有卡牌，點擊卡牌下方翻開卡牌，你需要翻開 3 張卡牌！"} texts={[]} speed={100}></StreamText>
+          </div>
+        </>
       }
       {interpretation && <div className=' fixed top-20 left-10 right-10 h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar'>
         <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={100}></StreamText>
