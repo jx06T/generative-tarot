@@ -72,7 +72,7 @@ function App() {
       })
       .catch(err => {
         console.error(err)
-        alert(err)
+        // alert(err)
       });
   }
 
@@ -95,7 +95,7 @@ function App() {
       })
       .catch(err => {
         console.error(err)
-        alert(err)
+        // alert(err)
       });
   }
 
