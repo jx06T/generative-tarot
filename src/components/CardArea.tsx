@@ -64,7 +64,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                 })}
             </div>
             <div className='z-[2000] fixed w-full top-0 left-0 h-4 bg-gradient-to-b from-yellow-300/50 to-transparent'></div>
-            <div onScroll={handleScroll} className='no-scrollbar /bg-amber-200 z-30 fixed w-full top-0 left-0 h-44 bg-transparent overflow-x-auto'>
+            <div onScroll={handleScroll} className='no-scrollbar /bg-amber-200 z-[1500] fixed w-full top-0 left-0 h-44 bg-transparent overflow-x-auto'>
                 <div className=' w-[1800px] h-full'></div>
             </div>
         </div>
