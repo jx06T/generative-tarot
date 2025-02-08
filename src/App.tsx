@@ -63,7 +63,6 @@ function App() {
     setQuestion(question0)
     setLoading(true)
     const options = { method: 'GET', headers: {} };
-    // fetch('http://127.0.0.1:5000/randomcard', options)
     fetch(API_URL + '/randomcard', options)
       .then(response => response.json())
       .then(response => {
@@ -88,7 +87,6 @@ function App() {
     };
 
     fetch(API_URL + '/reader', options)
-      // fetch('http://127.0.0.1:5000/reader', options)
       .then(response => response.json())
       .then(response => {
         console.log(response.response)
