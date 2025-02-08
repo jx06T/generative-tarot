@@ -22,7 +22,7 @@ function Card({ id, handleClick, move, englishName, chineseName, defaultIsFlippe
             // @ts-ignore
             onClick={(e) => handleClick(id)}
             style={{
-                zIndex: 20 + (move.x) * 0.05,
+                zIndex: !defaultIsFlipped ? 20 : 20 + (move.x) * 0.05,
                 transform: `translate(${move.x + bX}px, ${move.y + bY}px) rotate(${angle}deg)`,
             }}
         >
