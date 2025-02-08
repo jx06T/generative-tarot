@@ -34,7 +34,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const scrollLeft = e.currentTarget.scrollLeft;
-        setCurrentIndex(Math.floor(scrollLeft / 100) + 7)
+        setCurrentIndex((scrollLeft / 100) + 7)
     }
 
     const handleClick = (index: number) => {
@@ -60,7 +60,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                     const sedid = selectedIndex.indexOf(i)
                     const isDone = selectedIndex.length == 3;
 
-                    return <Card handleClick={handleClick} defaultIsFlipped={sed} id={i} key={i} imgUrl={card.keywords} move={{ x: sed ?(screenWidth>420? 1.8:1.2) * ((sedid - 1) * (screenWidth / 3)) - 30 : (i - currentIndex) * cardW, y: sed ? (screenHeight < 400 ? 260 : 835) : (0.1 * Math.pow((i - currentIndex), 2) * -30 + (isDone ? -400 : 0)) }} englishName={card.cardEnglishName} chineseName={card.cardChineseName} describe={card.describe}></Card>
+                    return <Card handleClick={handleClick} defaultIsFlipped={sed} id={i} key={i} imgUrl={card.keywords} move={{ x: sed ? (screenWidth > 420 ? 1.8 : 1.2) * ((sedid - 1) * (screenWidth / 3)) - 30 : (i - currentIndex) * cardW, y: sed ? (screenHeight < 400 ? 260 : 835) : (0.1 * Math.pow((i - currentIndex), 2) * -30 + (isDone ? -400 : 0)) }} englishName={card.cardEnglishName} chineseName={card.cardChineseName} describe={card.describe}></Card>
                 })}
             </div>
             <div className='z-[2000] fixed w-full top-0 left-0 h-4 bg-gradient-to-b from-yellow-300/50 to-transparent'></div>
