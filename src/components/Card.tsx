@@ -18,7 +18,7 @@ function Card({ id, handleClick, move, englishName, chineseName, defaultIsFlippe
     return (
         <div
             ref={cardRef}
-            className={`${defaultIsFlipped ? " duration-1000" : (move.y < -350 ? "duration-700" : " duration-75 ")} transition-all  origin-center card pointer-events-auto absolute select-none mt-3 rounded-2xl  w-[365px] h-[626px] bg-opacity-0 scale-50`}
+            className={`${defaultIsFlipped ? " duration-1000" : (move.y < -350 ? "duration-700" : " duration-300 ")} transition-all  origin-center card pointer-events-auto absolute select-none mt-3 rounded-2xl  w-[365px] h-[626px] bg-opacity-0 scale-50`}
             // @ts-ignore
             onClick={(e) => handleClick(id)}
             style={{
