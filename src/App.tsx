@@ -126,6 +126,7 @@ function App() {
 
       <div className=' absolute top-0 w-full h-full left-0 right-0 -z-10 pointer-events-none overflow-hidden bg-st'>
       </div>
+      {/* < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea> */}
       {tarotCards.length > 0 &&
         <>
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>

@@ -2,14 +2,16 @@ import { useEffect, useState, useRef } from 'react';
 import Card from './Card';
 
 function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretation: Function, tarotCards: CardT[] }) {
-    const [cards, setCards] = useState<CardT[]>([]);
-    const [currentIndex, setCurrentIndex] = useState<number>(7);
-    const [selectedIndex, setSelectedIndex] = useState<number[]>([]);
+
     const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
     const [screenHeight, setScreenHeight] = useState<number>(window.innerHeight);
+
+    const [cards, setCards] = useState<CardT[]>([]);
+    const [currentIndex, setCurrentIndex] = useState<number>(Math.floor(screenWidth / 400));
+    const [selectedIndex, setSelectedIndex] = useState<number[]>([]);
     const scrollRef = useRef<HTMLDivElement>(null);
     const cardW = 200;
-    const scrollMultiplier = 0.01; // Adjust this value to control scroll sensitivity
+    const lastXRef = useRef<number>(0)
 
     useEffect(() => {
         setCards((Array(22)).fill({
@@ -31,20 +33,29 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const scrollLeft = e.currentTarget.scrollLeft;
         requestAnimationFrame(() => {
-            const newIndex = 7 + (scrollLeft * scrollMultiplier);
-            setCurrentIndex(Math.max(0, Math.min(newIndex, cards.length - 1)));
+            // const newIndex = 7 + (scrollLeft * scrollMultiplier);
+            const b = Math.floor(screenWidth / 400)
+            const newIndex = b + Math.floor(scrollLeft / 10) / 10;
+            if (Math.abs(scrollLeft - newIndex) < 50) {
+                return
+            }
+            lastXRef.current = scrollLeft
+
+            if (newIndex !== currentIndex) {
+                setCurrentIndex(Math.max(b, Math.min(newIndex, cards.length - b)));
+            }
         });
     };
 
     const handleClick = (index: number) => {
         if (selectedIndex.length >= 3) return;
-        
+
         const newSelectedIndex = [...selectedIndex, index];
         setSelectedIndex(newSelectedIndex);
-        setCards(cards.map((e, i) => 
+        setCards(cards.map((e, i) =>
             i === index ? tarotCards[selectedIndex.length] : e
         ));
-        
+
         if (newSelectedIndex.length === 3) {
             getCardsinterpretation();
         }
@@ -60,7 +71,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
         const isDone = selectedIndex.length === 3;
         const baseX = (index - currentIndex) * cardW;
         const baseY = 0.1 * Math.pow((index - currentIndex), 2) * -30 + (isDone ? -400 : 0);
-        
+
         return { x: baseX, y: baseY };
     };
 
@@ -88,12 +99,12 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                 })}
             </div>
             <div className="z-[2000] fixed w-full top-0 left-0 h-4 bg-gradient-to-b from-yellow-300/50 to-transparent" />
-            <div 
+            <div
                 ref={scrollRef}
                 onScroll={handleScroll}
                 className="fixed w-full top-0 left-0 h-44 overflow-x-auto  bg-transparent no-scrollbar /bg-white/50 z-[1500]"
             >
-                <div className="w-[1800px] h-full" />
+                <div className="w-[2600px] h-full" />
             </div>
         </div>
     );
