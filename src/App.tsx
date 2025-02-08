@@ -56,6 +56,7 @@ function App() {
   const [question, setQuestion] = useState<string>("")
   const [interpretation, setInterpretation] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
+  const [showI, setShowI] = useState<boolean>(true)
 
   const getRandCards = (question0: string) => {
     setQuestion(question0)
@@ -92,7 +93,6 @@ function App() {
       .catch(err => console.error(err));
   }
 
-
   return (
     <div className=' w-full h-screen relative pt-16'>
       <div className=' px-[6%] sm:px-[min(12rem,12%)]'>
@@ -124,14 +124,18 @@ function App() {
       {tarotCards.length > 0 &&
         <>
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
-          <div className=' w-full px-10 z-[60] absolute top-64'>
-            <StreamText className=' text-white h-fit ' text={"滑動卡牌上半部檢視所有卡牌，點擊卡牌下方翻開卡牌，你需要翻開 3 張卡牌！"} texts={[]} speed={100}></StreamText>
-          </div>
+          {!interpretation &&
+            <div className=' w-full px-10 z-[60] absolute top-64'>
+              <StreamText className=' text-white h-fit ' text={"滑動卡牌上半部檢視所有卡牌，點擊卡牌下方翻開卡牌，你需要翻開 3 張卡牌！"} texts={[]} speed={100}></StreamText>
+            </div>
+          }
         </>
       }
-      {interpretation && <div className=' fixed top-20 left-10 right-10 h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar'>
-        <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={100}></StreamText>
-      </div>}
+      {(interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar `}>
+        <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={50}></StreamText>
+      </div>
+        <button className=' !bg-white/90 inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
+      </>}
       {loading && <div className=' pt-52 fixed top-0 left-0 right-0 h-screen bg-white/30 '>
         <LoadingAnimation className=' text-4xl scale-200'></LoadingAnimation>
       </div>}

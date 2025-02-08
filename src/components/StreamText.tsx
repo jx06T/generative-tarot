@@ -24,7 +24,12 @@ function StreamText({
         key: Date.now()
     });
 
-    const [displayedText, setDisplayedText] = useState('');
+    // const [displayedText, setDisplayedText] = useState('');
+    const [displayedText, setDisplayedText] = useState<string[]>([]);
+
+    const processText = (text: string): string[] => {
+        return text.split('\n');
+    };
 
     useEffect(() => {
         // 重置狀態
@@ -35,7 +40,9 @@ function StreamText({
             isDeleting: false,
             key: Date.now()
         };
-        setDisplayedText('');
+
+        // setDisplayedText('');
+        setDisplayedText([]);
 
         if (textArray.length === 0) return;
 
@@ -47,7 +54,8 @@ function StreamText({
                 if (state.currentIndex < currentText.length) {
                     state.displayedText += currentText[state.currentIndex].replace("%", "");
                     state.currentIndex++;
-                    setDisplayedText(state.displayedText);
+                    setDisplayedText(processText(state.displayedText));
+                    // setDisplayedText(state.displayedText);
                 } else {
                     state.isDeleting = true;
                     if (texts.length == 0) {
@@ -59,7 +67,8 @@ function StreamText({
                 if (state.currentIndex > 0) {
                     state.displayedText = state.displayedText.slice(0, -1);
                     state.currentIndex--;
-                    setDisplayedText(state.displayedText);
+                    setDisplayedText(processText(state.displayedText));
+                    // setDisplayedText(state.displayedText);
                 } else {
                     state.currentTextIndex = (state.currentTextIndex + 1) % textArray.length;
                     state.isDeleting = false;
@@ -76,10 +85,14 @@ function StreamText({
 
     return (
         <div className={className}>
-            <span>
-                {displayedText}
-                <span className="blink ml-1">|</span>
-            </span>
+            {displayedText.map((line, index) => (
+                <div key={index} className="whitespace-pre-wrap">
+                    {line}
+                    {index === displayedText.length - 1 && (
+                        <span className="animate-pulse ml-1 inline-block">|</span>
+                    )}
+                </div>
+            ))}
         </div>
     );
 };

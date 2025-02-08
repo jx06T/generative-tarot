@@ -4,8 +4,10 @@ import Card from './Card';
 
 function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretation: Function, tarotCards: CardT[] }) {
     const [cards, setCards] = useState<CardT[]>([])
-    const [currentIndex, setCurrentIndex] = useState<number>(4)
+    const [currentIndex, setCurrentIndex] = useState<number>(7)
     const [selectedIndex, setSelectedIndex] = useState<number[]>([])
+    const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth)
+    const [screenHeight, setScreenHeight] = useState<number>(window.innerHeight)
     const cardW = 200
 
     useEffect(() => {
@@ -15,6 +17,19 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
             describe: "",
             keywords: ""
         }).map((e, i) => ({ ...e, cardEnglishName: i.toString() })))
+
+        const handleResize = () => {
+            setScreenWidth(window.innerWidth)
+            setScreenHeight(window.innerHeight)
+
+        }
+
+        window.addEventListener("resize", handleResize)
+
+        return () => {
+            console.log("!!0")
+            window.removeEventListener("resize", handleResize);
+        }
     }, [])
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -45,12 +60,12 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                     const sedid = selectedIndex.indexOf(i)
                     const isDone = selectedIndex.length == 3;
 
-                    return <Card handleClick={handleClick} defaultIsFlipped={sed} id={i} key={i} imgUrl={card.keywords} move={{ x: sed ? (sedid - 1) * (screen.width / 4) : (i - currentIndex) * cardW, y: sed ? (800) : (0.1 * Math.pow((i - currentIndex), 2) * -30 + (isDone ? -400 : 0)) }} englishName={card.cardEnglishName} chineseName={card.cardChineseName} describe={card.describe}></Card>
+                    return <Card handleClick={handleClick} defaultIsFlipped={sed} id={i} key={i} imgUrl={card.keywords} move={{ x: sed ?(screenWidth>420? 1.8:1.2) * ((sedid - 1) * (screenWidth / 3)) - 30 : (i - currentIndex) * cardW, y: sed ? (screenHeight < 400 ? 260 : 835) : (0.1 * Math.pow((i - currentIndex), 2) * -30 + (isDone ? -400 : 0)) }} englishName={card.cardEnglishName} chineseName={card.cardChineseName} describe={card.describe}></Card>
                 })}
             </div>
             <div className='z-[2000] fixed w-full top-0 left-0 h-4 bg-gradient-to-b from-yellow-300/50 to-transparent'></div>
             <div onScroll={handleScroll} className='no-scrollbar /bg-amber-200 z-30 fixed w-full top-0 left-0 h-44 bg-transparent overflow-x-auto'>
-                <div className=' w-[2200px] h-full'></div>
+                <div className=' w-[1800px] h-full'></div>
             </div>
         </div>
     )
