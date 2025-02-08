@@ -28,6 +28,7 @@ import LoadingAnimation from './components/LoadingAnimation';
 //     "describe": "一包神奇的方便面，让你瞬间飞到游戏地图的另一边！但可能会有点晕。",
 //     "keywords": "noodles"
 //   }]
+
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
 
 function App() {
