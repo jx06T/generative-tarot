@@ -134,7 +134,7 @@ function App() {
       {(interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar `}>
         <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={50}></StreamText>
       </div>
-        <button className=' !bg-white/90 inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
+        <button className=' !bg-white/90 !text-black inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
       </>}
       {loading && <div className=' pt-52 fixed top-0 left-0 right-0 h-screen bg-white/30 '>
         <LoadingAnimation className=' text-4xl scale-200'></LoadingAnimation>
@@ -172,7 +172,7 @@ function QuestionForm({ onSubmit }: { onSubmit: Function }) {
       <div className='w-full text-right'>
         <button
           onClick={handleSubmit}
-          className='!bg-white/90 inline-block'
+          className='!bg-white/90 inline-block !text-black'
         >
           產生牌組
         </button>
