@@ -70,7 +70,10 @@ function App() {
         setLoading(false)
         console.log(response.response.cards)
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err)
+        alert(err)
+      });
   }
 
   const getCardsinterpretation = () => {
@@ -88,7 +91,6 @@ function App() {
       .then(response => response.json())
       .then(response => {
         console.log(response.response)
-        alert(response)
         setInterpretation(response.response)
       })
       .catch(err => {
