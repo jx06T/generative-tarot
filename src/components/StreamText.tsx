@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 
 function StreamText({
@@ -50,6 +50,10 @@ function StreamText({
                     setDisplayedText(state.displayedText);
                 } else {
                     state.isDeleting = true;
+                    if (texts.length == 0) {
+                        console.log("dd")
+                        clearInterval(timer)
+                    }
                 }
             } else {
                 if (state.currentIndex > 0) {
