@@ -61,7 +61,7 @@ function App() {
   const getRandCards = (question0: string) => {
     setQuestion(question0)
     setLoading(true)
-    const options = { method: 'GET', headers: { 'User-Agent': 'insomnia/10.3.0' } };
+    const options = { method: 'GET', headers: {} };
     // fetch('http://127.0.0.1:5000/randomcard', options)
     fetch(API_URL + '/randomcard', options)
       .then(response => response.json())
@@ -76,7 +76,7 @@ function App() {
   const getCardsinterpretation = () => {
     const options = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'User-Agent': 'insomnia/10.3.0' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         question: question,
         cards: tarotCards,
@@ -88,9 +88,13 @@ function App() {
       .then(response => response.json())
       .then(response => {
         console.log(response.response)
+        alert(response)
         setInterpretation(response.response)
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err)
+        alert(err)
+      });
   }
 
   return (
