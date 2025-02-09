@@ -15,7 +15,7 @@ function Card({ screenWidth, currentIndex, id, handleClick, move, englishName, c
             setBY(0)
             setTimeout(() => {
                 setDontAn(true)
-            }, 1000);
+            }, 700);
             return
         }
 
@@ -29,7 +29,7 @@ function Card({ screenWidth, currentIndex, id, handleClick, move, englishName, c
     return (
         <div
             ref={cardRef}
-            className={`${(defaultIsFlipped) ? (dontAn ? " transition-none" : " duration-1000  transition-all") : (move.y < -350 ? "duration-700  transition-all" : " transition-none")} -mx-10 grow-0 shrink-0 card pointer-events-auto  select-none rounded-sm  w-[184px] h-[318px] bg-opacity-0 scale-100`}
+            className={`${(defaultIsFlipped) ? (dontAn ? " transition-none" : " duration-700  transition-transform") : (move.y < -350 ? "duration-700  transition-all" : " transition-none")} -mx-10 grow-0 shrink-0 card pointer-events-auto  select-none rounded-sm  w-[184px] h-[318px] bg-opacity-0 scale-100`}
             // @ts-ignore
             onClick={(e) => {
                 if (!defaultIsFlipped) {
