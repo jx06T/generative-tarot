@@ -68,7 +68,7 @@ function App() {
       .then(response => {
         setTarotCards(response.response.cards)
         setLoading(false)
-        console.log(response.response.cards)
+        // console.log(response.response.cards)
       })
       .catch(err => {
         console.error(err)

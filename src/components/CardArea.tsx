@@ -65,7 +65,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
 
     const getCardPosition = (isSelected: boolean, selectedPosition: number) => {
         if (isSelected) {
-            const xOffset = (selectedPosition) * (screenWidth / 3) + screenWidth / 6 - 105;
+            const xOffset = (selectedPosition) * (screenWidth / 3) + screenWidth / 6 - 145;
             const yOffset = screenHeight < 400 ? 25 : (screenWidth < 420 ? 280 : 340);
             return { x: xOffset, y: yOffset };
         }
