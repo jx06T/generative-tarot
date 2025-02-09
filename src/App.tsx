@@ -132,7 +132,7 @@ function App() {
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
           {!interpretation &&
             <div className=' w-full px-10 z-[60] absolute top-64'>
-              <StreamText className=' text-white h-fit ' text={"滑動卡牌上半部檢視所有卡牌，點擊卡牌下方翻開卡牌，你需要翻開 3 張卡牌！"} texts={[]} speed={100}></StreamText>
+              <StreamText className=' text-white h-fit ' text={"滑動卡牌檢視並點擊翻開 3 張卡牌！"} texts={[]} speed={100}></StreamText>
             </div>
           }
         </>
