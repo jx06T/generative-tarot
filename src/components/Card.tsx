@@ -73,7 +73,7 @@ function Card({ screenWidth, currentIndex, id, handleClick, move, englishName, c
                     </div>
                 </div>
                 <div className=" absolute bottom-3 left-[1px] right-[2px] pt-32 pb-2 text-center text-white bg-gradient-to-b from-transparent to-black">
-                    <span className=" !text-lg  !leading-2">
+                    <span className=" !text-base  !leading-1">
                         {chineseName}<br></br>{englishName}
                     </span>
                 </div>
