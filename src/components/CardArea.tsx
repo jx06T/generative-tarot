@@ -7,10 +7,9 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
     const [screenHeight, setScreenHeight] = useState<number>(window.innerHeight);
 
     const [cards, setCards] = useState<CardT[]>([]);
-    const [currentIndex, setCurrentIndex] = useState<number>(Math.floor(screenWidth / 400));
+    const [done, setDone] = useState<boolean>(false);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [selectedIndex, setSelectedIndex] = useState<number[]>([]);
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const cardW = 200;
     const lastXRef = useRef<number>(0)
 
     useEffect(() => {
@@ -33,22 +32,22 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const scrollLeft = e.currentTarget.scrollLeft;
         requestAnimationFrame(() => {
-            // const newIndex = 7 + (scrollLeft * scrollMultiplier);
-            const b = Math.floor(screenWidth / 400)
-            const newIndex = b + Math.floor(scrollLeft / 10) / 10;
-            if (Math.abs(scrollLeft - newIndex) < 50) {
-                return
-            }
+            const newIndex = Math.floor(scrollLeft / 10) / 10;
             lastXRef.current = scrollLeft
 
             if (newIndex !== currentIndex) {
-                setCurrentIndex(Math.max(b, Math.min(newIndex, cards.length - b)));
+                setCurrentIndex(newIndex);
             }
         });
     };
 
     const handleClick = (index: number) => {
-        if (selectedIndex.length >= 3) return;
+        if (selectedIndex.length >= 3) {
+            setTimeout(() => {
+                setDone(true)
+            }, 1000);
+            return
+        };
 
         const newSelectedIndex = [...selectedIndex, index];
         setSelectedIndex(newSelectedIndex);
@@ -57,31 +56,37 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
         ));
 
         if (newSelectedIndex.length === 3) {
+            setTimeout(() => {
+                setDone(true)
+            }, 2000);
             getCardsinterpretation();
         }
     };
 
-    const getCardPosition = (index: number, isSelected: boolean, selectedPosition: number) => {
+    const getCardPosition = (isSelected: boolean, selectedPosition: number) => {
         if (isSelected) {
-            const xOffset = (screenWidth > 420 ? 1.8 : 1.2) * ((selectedPosition - 1) * (screenWidth / 3)) - 30;
-            const yOffset = screenHeight < 400 ? 260 : 835;
+            const xOffset = (selectedPosition) * (screenWidth / 3) + screenWidth / 6 - 105;
+            const yOffset = screenHeight < 400 ? 25 : (screenWidth < 420 ? 280 : 340);
             return { x: xOffset, y: yOffset };
         }
 
         const isDone = selectedIndex.length === 3;
-        const baseX = (index - currentIndex) * cardW;
-        const baseY = 0.1 * Math.pow((index - currentIndex), 2) * -30 + (isDone ? -400 : 0);
+        const baseY = (isDone ? -320 : -110);
 
-        return { x: baseX, y: baseY };
+        return { x: 0, y: baseY };
     };
 
     return (
         <div className="w-full fixed bg-gradient-to-b from-black to-transparent top-0 left-0 h-[700px]">
-            <div className="w-10 h-full mx-auto">
+            <div
+                className={`w-full h-screen /bg-red-300 flex ${done ? "overflow-x-hidden" : "overflow-x-auto"} overflow-y-hidden pl-14  no-scrollbar`}
+                onScroll={handleScroll}
+
+            >
                 {cards.map((card: CardT, i) => {
                     const isSelected = selectedIndex.includes(i);
                     const selectedPosition = selectedIndex.indexOf(i);
-                    const position = getCardPosition(i, isSelected, selectedPosition);
+                    const position = getCardPosition(isSelected, selectedPosition);
 
                     return (
                         <Card
@@ -89,6 +94,8 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                             handleClick={handleClick}
                             defaultIsFlipped={isSelected}
                             id={i}
+                            currentIndex={currentIndex}
+                            screenWidth={screenWidth}
                             imgUrl={card.keywords}
                             move={position}
                             englishName={card.cardEnglishName}
@@ -99,13 +106,6 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                 })}
             </div>
             <div className="z-[2000] fixed w-full top-0 left-0 h-4 bg-gradient-to-b from-yellow-300/50 to-transparent" />
-            <div
-                ref={scrollRef}
-                onScroll={handleScroll}
-                className="fixed w-full top-0 left-0 h-44 overflow-x-auto  bg-transparent no-scrollbar /bg-white/50 z-[1500]"
-            >
-                <div className="w-[2600px] h-full" />
-            </div>
         </div>
     );
 }

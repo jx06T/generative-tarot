@@ -89,7 +89,7 @@ function App() {
     fetch(API_URL + '/reader', options)
       .then(response => response.json())
       .then(response => {
-        console.log(response.response)
+        // console.log(response.response)
         setInterpretation(response.response)
       })
       .catch(err => {
@@ -126,7 +126,7 @@ function App() {
 
       <div className=' absolute top-0 w-full h-full left-0 right-0 -z-10 pointer-events-none overflow-hidden bg-st'>
       </div>
-      {/* < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea> */}
+      {/* < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={testCards}></CardArea> */}
       {tarotCards.length > 0 &&
         <>
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
