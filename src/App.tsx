@@ -9,25 +9,8 @@ import LoadingAnimation from './components/LoadingAnimation';
 
 // const testInterpretation: string = "过去（疯狂土豆）：你对午餐有着热切的期待和积极的行动，就像这颗跳舞的土豆一样充满活力。\n\n现在（忧郁章鱼）：你可能会遇到一些小小的阻碍或不确定性，就像忧郁章鱼带来的随机影响，但不要灰心。\n\n未来（彩虹独角兽）：最终，你会得到你想要的午餐！彩虹独角兽的出现预示着好运降临，你会顺利享受到美味的午餐。\n"
 
-// const testCards: CardT[] = [
-//   {
-//     "cardChineseName": "暴走企鹅",
-//     "cardEnglishName": "Waddling Fury",
-//     "describe": "一只愤怒的企鹅，用它的短翅膀扇动着你，造成1点暴击伤害。",
-//     "keywords": "penguin"
-//   },
-//   {
-//     "cardChineseName": "忧郁土豆",
-//     "cardEnglishName": "Melancholy Potato",
-//     "describe": "一个陷入存在主义危机的土豆，让你失去1点行动力。它真的很忧郁。",
-//     "keywords": "potato"
-//   },
-//   {
-//     "cardChineseName": "飞天方便面",
-//     "cardEnglishName": "Flying Noodles",
-//     "describe": "一包神奇的方便面，让你瞬间飞到游戏地图的另一边！但可能会有点晕。",
-//     "keywords": "noodles"
-//   }]
+// const testCards: CardT[] = [{ 'cardChineseName': '閃電收割者', 'cardEnglishName': 'Lightning Scythed', 'describe': '召喚一排閃電收割的鐮刀，將所有敵人瞬間收割成灰燼！', 'keywords': 'lightning scythe', 'photo_url': 'https://images.unsplash.com/photo-1429552077091-836152271555?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxsaWdodG5pbmclMjBzY3l0aGV8ZW58MHwxfHx8MTczOTI4MjIwMHww&ixlib=rb-4.0.3&q=80&w=1080' }, { 'cardChineseName': '夢幻花園', 'cardEnglishName': 'Dreamy Gardened', 'describe': '創造一個充滿奇花異草的夢幻花園，花園裡的花朵會唱歌跳舞，讓你的敵人沉醉其中，無法動彈。', 'keywords': 'fantasy garden', 'photo_url': 'https://images.unsplash.com/photo-1547391076-c6132ab72010?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxmYW50YXN5JTIwZ2FyZGVufGVufDB8MXx8fDE3MzkyODIyMDF8MA&ixlib=rb-4.0.3&q=80&w=1080' }, { 'cardChineseName': '內在活力', 'cardEnglishName': 'Vibrant Internality', 'describe': '釋放你內在的無限活力！你的攻擊力瞬間提升十倍，並能無視一切防禦！', 'keywords': 'inner energy burst', 'photo_url': 'https://images.unsplash.com/photo-1548613053-22087dd8edb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxpbm5lciUyMGVuZXJneSUyMGJ1cnN0fGVufDB8MXx8fDE3MzkyODIyMDJ8MA&ixlib=rb-4.0.3&q=80&w=1080' }]
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
 
@@ -142,7 +125,7 @@ function App() {
       </div>
         <button className=' !bg-white/90 !text-black inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
       </>}
-      {loading && <div className=' pt-52 fixed top-0 left-0 right-0 h-screen bg-white/30 '>
+      {loading && <div className=' pt-52 fixed top-0 left-0 right-0 h-screen bg-white/5 backdrop-blur-xs '>
         <LoadingAnimation className=' text-4xl scale-200'></LoadingAnimation>
       </div>}
     </div >
@@ -171,7 +154,7 @@ function QuestionForm({ onSubmit }: { onSubmit: Function }) {
       <textarea
         value={questionText}
         onChange={handleChange}
-        className='outline-none bg-white/30 rounded-md py-1 px-4 w-full resize-none text-white text-base'
+        className='outline-none bg-white/20 rounded-md py-1 px-4 w-full resize-none text-white text-base backdrop-blur-xs'
         placeholder='問個問題吧！'
         rows={3}
       />

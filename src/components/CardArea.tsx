@@ -7,7 +7,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
     const [screenHeight, setScreenHeight] = useState<number>(window.innerHeight);
 
     const [cards, setCards] = useState<CardT[]>([]);
-    const [done, setDone] = useState<boolean>(false);
+    // const [done, setDone] = useState<boolean>(false);
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const [selectedIndex, setSelectedIndex] = useState<number[]>([]);
     const lastXRef = useRef<number>(0)
@@ -43,9 +43,6 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
 
     const handleClick = (index: number) => {
         if (selectedIndex.length >= 3) {
-            setTimeout(() => {
-                setDone(true)
-            }, 1000);
             return
         };
 
@@ -56,37 +53,33 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
         ));
 
         if (newSelectedIndex.length === 3) {
-            setTimeout(() => {
-                setDone(true)
-            }, 2000);
             getCardsinterpretation();
         }
     };
 
-    const getCardPosition = (isSelected: boolean, selectedPosition: number) => {
+    const getCardPosition = (index: number, isSelected: boolean, selectedPosition: number) => {
         if (isSelected) {
-            const xOffset = (selectedPosition) * (screenWidth / 3) + screenWidth / 6 - 145;
+            const xOffset = (selectedPosition) * (screenWidth / 3.2) + screenWidth / 6.4 - 100;
             const yOffset = screenHeight < 400 ? 25 : (screenWidth < 420 ? 280 : 340);
             return { x: xOffset, y: yOffset };
         }
 
         const isDone = selectedIndex.length === 3;
+        const xOffset = (index - currentIndex) * 105;
         const baseY = (isDone ? -320 : -110);
 
-        return { x: 0, y: baseY };
+        return { x: xOffset, y: baseY };
     };
 
     return (
         <div className="w-full fixed bg-gradient-to-b from-black to-transparent top-0 left-0 h-[700px]">
             <div
-                className={`w-full h-screen /bg-red-300 flex ${done ? "overflow-x-hidden" : "overflow-x-auto"} overflow-y-hidden pl-14  no-scrollbar`}
-                onScroll={handleScroll}
-
+                className={`w-full h-screen /bg-red-300 flex overflow-x-hidden overflow-y-hidden pl-14 no-scrollbar`}
             >
                 {cards.map((card: CardT, i) => {
                     const isSelected = selectedIndex.includes(i);
                     const selectedPosition = selectedIndex.indexOf(i);
-                    const position = getCardPosition(isSelected, selectedPosition);
+                    const position = getCardPosition(i, isSelected, selectedPosition);
 
                     return (
                         <Card
@@ -96,7 +89,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                             id={i}
                             currentIndex={currentIndex}
                             screenWidth={screenWidth}
-                            imgUrl={card.keywords}
+                            imgUrl={card.photo_url}
                             move={position}
                             englishName={card.cardEnglishName}
                             chineseName={card.cardChineseName}
@@ -104,6 +97,12 @@ function CardArea({ getCardsinterpretation, tarotCards }: { getCardsinterpretati
                         />
                     );
                 })}
+            </div>
+            <div
+                onScroll={handleScroll}
+                className=' bg-gray-600/5 absolute top-0 left-0 w-full h-36 overflow-x-auto z-50  no-scrollbar'
+            >
+                <div className=' h-full w-[2200px]'></div>
             </div>
             <div className="z-[2000] fixed w-full top-0 left-0 h-4 bg-gradient-to-b from-yellow-300/50 to-transparent" />
         </div>
