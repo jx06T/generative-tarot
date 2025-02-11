@@ -114,13 +114,13 @@ function App() {
         <>
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
           {!interpretation &&
-            <div className=' w-full px-10 z-[60] absolute top-64'>
-              <StreamText className=' text-white h-fit ' text={"滑動卡牌檢視並點擊翻開 3 張卡牌！"} texts={[]} speed={100}></StreamText>
+            <div className=' w-full px-10 z-[60] absolute top-80'>
+              <StreamText className=' text-white h-fit ' text={"滑動卡牌上半部檢視卡牌，點擊卡牌下半部翻開卡牌，選擇 3 張卡牌並翻開！"} texts={[]} speed={100}></StreamText>
             </div>
           }
         </>
       }
-      {(interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar `}>
+      {(interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar backdrop-blur-xs `}>
         <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={50}></StreamText>
       </div>
         <button className=' !bg-white/90 !text-black inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
