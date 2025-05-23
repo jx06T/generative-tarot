@@ -6,12 +6,14 @@ function StreamText({
     texts = [],
     speed = 90,
     className = '',
+    complete = false,
     onComplete
 }: {
     text?: string;
     texts?: string[];
     speed?: number;
     className?: string;
+    complete?: boolean
     onComplete?: () => void;
 }) {
     const textArray = useMemo(() => texts.length > 0 ? texts : [text], [text, texts]);
@@ -68,7 +70,6 @@ function StreamText({
                     state.displayedText = state.displayedText.slice(0, -1);
                     state.currentIndex--;
                     setDisplayedText(processText(state.displayedText));
-                    // setDisplayedText(state.displayedText);
                 } else {
                     state.currentTextIndex = (state.currentTextIndex + 1) % textArray.length;
                     state.isDeleting = false;
@@ -85,14 +86,19 @@ function StreamText({
 
     return (
         <div className={className}>
-            {displayedText.map((line, index) => (
-                <div key={index} className="whitespace-pre-wrap">
-                    {line}
-                    {index === displayedText.length - 1 && (
-                        <span className="animate-pulse ml-1 inline-block">|</span>
-                    )}
-                </div>
-            ))}
+            {complete ?
+                <div key={0} className="whitespace-pre-wrap">
+                    {text || text[0]}
+                </div> :
+                displayedText.map((line, index) => (
+                    <div key={index} className="whitespace-pre-wrap">
+                        {line}
+                        {index === displayedText.length - 1 && (
+                            <span className="animate-pulse ml-1 inline-block">|</span>
+                        )}
+                    </div>
+                ))
+            }
         </div>
     );
 };

@@ -5,7 +5,7 @@ import Aurora from './components/Aurora';
 import GradientText from './components/GradientText';
 import CardArea from './components/CardArea';
 import LoadingAnimation from './components/LoadingAnimation';
-
+import { TablerCardsFilled } from './utils/Icons';
 
 // const testInterpretation: string = "过去（疯狂土豆）：你对午餐有着热切的期待和积极的行动，就像这颗跳舞的土豆一样充满活力。\n\n现在（忧郁章鱼）：你可能会遇到一些小小的阻碍或不确定性，就像忧郁章鱼带来的随机影响，但不要灰心。\n\n未来（彩虹独角兽）：最终，你会得到你想要的午餐！彩虹独角兽的出现预示着好运降临，你会顺利享受到美味的午餐。\n"
 
@@ -13,6 +13,44 @@ import LoadingAnimation from './components/LoadingAnimation';
 
 
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+
+
+function QuestionForm({ onSubmit }: { onSubmit: Function }) {
+  const [questionText, setQuestionText] = useState<string>('');
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setQuestionText(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (questionText.trim()) {
+      onSubmit(questionText);
+      setQuestionText('');
+    }
+  };
+
+  return (
+    <div
+      className='outline-none bg-white/20 rounded-md  w-full resize-none text-white text-base backdrop-blur-xs flex'
+    >
+
+      <textarea
+        value={questionText}
+        className='outline-none bg-transparent rounded-md py-1 px-4 shrink-0 grow resize-none text-white text-base no-scrollbar'
+        onChange={handleChange}
+        placeholder='問個問題吧！'
+        rows={3}
+      />
+      <button
+        onClick={handleSubmit}
+        className='!bg-white/10 inline-block text-white'
+      >
+        <TablerCardsFilled className='text-2xl  hover:scale-110' />
+      </button>
+    </div>
+  );
+}
+
 
 function App() {
   const fortuneTellingQuestions = [
@@ -51,11 +89,9 @@ function App() {
       .then(response => {
         setTarotCards(response.response.cards)
         setLoading(false)
-        // console.log(response.response.cards)
       })
       .catch(err => {
         console.error(err)
-        // alert(err)
       });
   }
 
@@ -85,19 +121,19 @@ function App() {
     <div className=' w-full h-screen relative pt-16'>
       <div className=' px-[6%] sm:px-[min(12rem,12%)]'>
         <GradientText
-          colors={["#3A29FF", "#FF94B4", "#FF3232"]}
+          colors={["#3b31ff", "#FF94B4", "#FF3232"]}
           animationSpeed={3}
           showBorder={false}
         >
-          <p className=' text-4xl mx-4 my-1 md:text-5xl font-extrabold'>Generative Tarot</p>
+          <h1 className=' text-center text-5xl my-1 md:text-6xl font-extrabold'>Arcana</h1>
+          <h2 className=' text-center text-lg  my-1 md:text-xl tracking-widest'>Generative Tarot</h2>
         </GradientText>
 
         <div className=' flex flex-col items-center mt-12 space-y-4'>
           <StreamText className=' text-white ' text='Generative Tarot' texts={fortuneTellingQuestions}></StreamText>
-
           <QuestionForm onSubmit={getRandCards}></QuestionForm>
+          <h2 className=' text-center text-sm md:text-lg tracking-wider text-white'>Click <TablerCardsFilled className=' inline-block text-base'/> to generate your own card combination</h2>
         </div>
-        {/* <Card move={{ x: 400, y: 600 }} englishName={"apple"} chineseName={"蘋果"} describe='哈哈哈'></Card> */}
       </div>
 
       <div className=' absolute top-0 w-full h-full left-0 right-0 -z-10 pointer-events-none'>
@@ -109,8 +145,8 @@ function App() {
 
       <div className=' absolute top-0 w-full h-full left-0 right-0 -z-10 pointer-events-none overflow-hidden bg-st'>
       </div>
-      {/* < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={testCards}></CardArea> */}
-      {tarotCards.length > 0 &&
+      {
+        tarotCards.length > 0 &&
         <>
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
           {!interpretation &&
@@ -120,52 +156,20 @@ function App() {
           }
         </>
       }
-      {(interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar backdrop-blur-xs `}>
-        <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={50}></StreamText>
-      </div>
-        <button className=' !bg-white/90 !text-black inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
-      </>}
-      {loading && <div className=' pt-52 fixed top-0 left-0 right-0 h-screen bg-white/5 backdrop-blur-xs '>
-        <LoadingAnimation className=' text-4xl scale-200'></LoadingAnimation>
-      </div>}
+      {
+        (interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar backdrop-blur-xs `}>
+          <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={50}></StreamText>
+        </div>
+          <button className=' !bg-white/90 !text-black inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
+        </>
+      }
+      {
+        loading && <div className=' pt-52 fixed top-0 left-0 right-0 h-screen bg-white/5 backdrop-blur-xs '>
+          <LoadingAnimation className=' text-4xl scale-200'></LoadingAnimation>
+        </div>
+      }
     </div >
   )
 }
 
 export default App
-
-function QuestionForm({ onSubmit }: { onSubmit: Function }) {
-  const [questionText, setQuestionText] = useState<string>('');
-
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setQuestionText(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    // Only submit if there is a non-empty question
-    if (questionText.trim()) {
-      onSubmit(questionText);
-      setQuestionText(''); // Clear the textarea after submitting
-    }
-  };
-
-  return (
-    <>
-      <textarea
-        value={questionText}
-        onChange={handleChange}
-        className='outline-none bg-white/20 rounded-md py-1 px-4 w-full resize-none text-white text-base backdrop-blur-xs'
-        placeholder='問個問題吧！'
-        rows={3}
-      />
-      <div className='w-full text-right'>
-        <button
-          onClick={handleSubmit}
-          className='!bg-white/90 inline-block !text-black'
-        >
-          產生牌組
-        </button>
-      </div>
-    </>
-  );
-}
