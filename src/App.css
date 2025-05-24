@@ -2,7 +2,7 @@
 
 #root {
   width: 100%;
-  font-family: "Cinzel","Noto Sans TC", serif;
+  font-family: "Cinzel", "Noto Sans TC", serif;
   font-optical-sizing: auto;
   /* font-weight: 500; */
   font-style: normal;
@@ -69,4 +69,63 @@
 }
 
 body {
+}
+
+@keyframes orbit0 {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) translateX(80px) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg) translateX(80px)
+      rotate(-360deg);
+  }
+}
+
+@keyframes orbit1 {
+  from {
+    transform: translate(-50%, -50%) rotate(120deg) translateX(80px)
+      rotate(-120deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(480deg) translateX(80px)
+      rotate(-480deg);
+  }
+}
+
+@keyframes orbit2 {
+  from {
+    transform: translate(-50%, -50%) rotate(240deg) translateX(80px)
+      rotate(-240deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(600deg) translateX(80px)
+      rotate(-600deg);
+  }
+}
+
+@keyframes cardRotate0 {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes cardRotate1 {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes cardRotate2 {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }

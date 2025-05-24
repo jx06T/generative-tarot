@@ -169,7 +169,7 @@ function App() {
       }
       {
         loading && <div className=' pt-52 fixed top-0 left-0 right-0 h-screen bg-white/5 backdrop-blur-xs '>
-          <LoadingAnimation className=' text-4xl scale-200'></LoadingAnimation>
+          <LoadingAnimation className=' text-xl scale-100'></LoadingAnimation>
         </div>
       }
     </div >

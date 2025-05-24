@@ -1,15 +1,40 @@
-import * as React from "react"
+import SimpleCard from "./SimpleCard";
 
-const LoadingAnimation = ({ primaryColor = "bg-white ", className = "", ...props }: { className?: string, primaryColor?: string, props?: React.HTMLProps<HTMLDivElement> }) => {
+function LoadingAnimation({ className }: { className: string }) {
     return (
-        <div {...props} className={"flex items-center justify-center w-full h-6 rounded-lg " + className || ""}>
-            <div className="flex space-x-2">
-                <div className={`w-3 h-3 rounded-full animate-[bounce_1s_ease-in-out_infinite] ${primaryColor}`} />
-                <div className={`w-3 h-3 rounded-full animate-[bounce_1s_ease-in-out_0.2s_infinite] ${primaryColor}`} />
-                <div className={`w-3 h-3 rounded-full animate-[bounce_1s_ease-in-out_0.4s_infinite] ${primaryColor}`} />
+        <div className={`flex items-center justify-center bg-transparent ${className}`}>
+            <div className="relative">
+                <div className="relative w-48 h-48">
+                    {[0, 1, 2].map((index) => {
+                        const animationDuration = 3 + index * 0.5; 
+
+                        return (
+                            <div
+                                key={index}
+                                className="absolute top-1/2 left-[60%]"
+                                style={{
+                                    animation: `orbit${index} ${animationDuration}s linear infinite`,
+                                }}
+                            >
+                                <SimpleCard
+                                    size={50}
+                                    className="shadow-lg"
+                                    style={{
+                                        animation: `cardRotate${index} ${animationDuration}s linear infinite reverse`,
+                                    }}
+                                />
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div className="mt-8 text-center">
+                    <p className="text-white text-lg font-medium animate-pulse">Generating...</p>
+                </div>
             </div>
+
         </div>
     );
-};
+}
 
 export default LoadingAnimation
