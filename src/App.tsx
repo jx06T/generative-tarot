@@ -81,6 +81,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(false)
   const [showI, setShowI] = useState<boolean>(true)
   const [isStreamTextDone, setIsStreamTextDone] = useState<boolean>(false);
+  const [isSelectDone, setIsSelectDone] = useState<boolean>(false);
 
   const getRandCards = (question0: string) => {
     setQuestion(question0)
@@ -98,6 +99,7 @@ function App() {
   }
 
   const getCardsinterpretation = () => {
+    setIsSelectDone(true)
     const options = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -153,9 +155,15 @@ function App() {
         <>
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
           {!interpretation &&
-            <div className=' w-full px-10 z-[60] fixed top-72'>
-              <StreamText className=' text-white h-fit ' text={"滑動卡牌挑選喜歡的牌並雙擊翻開！"} texts={[]} speed={100}></StreamText>
-            </div>
+            (isSelectDone ?
+              <div className=' w-full px-10 z-[60] fixed top-60'>
+                <StreamText className=' text-white h-fit ' text={"占卜師正在解讀你的卡牌．．．"} texts={[]} speed={70}></StreamText>
+              </div>
+              :
+              <div className=' w-full px-10 z-[60] fixed top-60'>
+                <StreamText className=' text-white h-fit ' text={"滑動卡牌挑選喜歡的牌並雙擊翻開！"} texts={[]} speed={70}></StreamText>
+              </div>
+            )
           }
         </>
       }
