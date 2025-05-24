@@ -9,7 +9,7 @@ import { TablerCardsFilled } from './utils/Icons';
 
 // const testInterpretation: string = "过去（疯狂土豆）：你对午餐有着热切的期待和积极的行动，就像这颗跳舞的土豆一样充满活力。\n\n现在（忧郁章鱼）：你可能会遇到一些小小的阻碍或不确定性，就像忧郁章鱼带来的随机影响，但不要灰心。\n\n未来（彩虹独角兽）：最终，你会得到你想要的午餐！彩虹独角兽的出现预示着好运降临，你会顺利享受到美味的午餐。\n"
 
-// const testCards: CardT[] = [{ 'cardChineseName': '閃電收割者', 'cardEnglishName': 'Lightning Scythed', 'describe': '召喚一排閃電收割的鐮刀，將所有敵人瞬間收割成灰燼！', 'keywords': 'lightning scythe', 'photo_url': 'https://images.unsplash.com/photo-1429552077091-836152271555?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxsaWdodG5pbmclMjBzY3l0aGV8ZW58MHwxfHx8MTczOTI4MjIwMHww&ixlib=rb-4.0.3&q=80&w=1080' }, { 'cardChineseName': '夢幻花園', 'cardEnglishName': 'Dreamy Gardened', 'describe': '創造一個充滿奇花異草的夢幻花園，花園裡的花朵會唱歌跳舞，讓你的敵人沉醉其中，無法動彈。', 'keywords': 'fantasy garden', 'photo_url': 'https://images.unsplash.com/photo-1547391076-c6132ab72010?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxmYW50YXN5JTIwZ2FyZGVufGVufDB8MXx8fDE3MzkyODIyMDF8MA&ixlib=rb-4.0.3&q=80&w=1080' }, { 'cardChineseName': '內在活力', 'cardEnglishName': 'Vibrant Internality', 'describe': '釋放你內在的無限活力！你的攻擊力瞬間提升十倍，並能無視一切防禦！', 'keywords': 'inner energy burst', 'photo_url': 'https://images.unsplash.com/photo-1548613053-22087dd8edb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxpbm5lciUyMGVuZXJneSUyMGJ1cnN0fGVufDB8MXx8fDE3MzkyODIyMDJ8MA&ixlib=rb-4.0.3&q=80&w=1080' }]
+const testCards: CardT[] = [{ 'cardChineseName': '閃電收割者', 'cardEnglishName': 'Lightning Scythed', 'describe': '召喚一排閃電收割的鐮刀，將所有敵人瞬間收割成灰燼！', 'keywords': 'lightning scythe', 'photo_url': 'https://images.unsplash.com/photo-1429552077091-836152271555?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxsaWdodG5pbmclMjBzY3l0aGV8ZW58MHwxfHx8MTczOTI4MjIwMHww&ixlib=rb-4.0.3&q=80&w=1080' }, { 'cardChineseName': '夢幻花園', 'cardEnglishName': 'Dreamy Gardened', 'describe': '創造一個充滿奇花異草的夢幻花園，花園裡的花朵會唱歌跳舞，讓你的敵人沉醉其中，無法動彈。', 'keywords': 'fantasy garden', 'photo_url': 'https://images.unsplash.com/photo-1547391076-c6132ab72010?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxmYW50YXN5JTIwZ2FyZGVufGVufDB8MXx8fDE3MzkyODIyMDF8MA&ixlib=rb-4.0.3&q=80&w=1080' }, { 'cardChineseName': '內在活力', 'cardEnglishName': 'Vibrant Internality', 'describe': '釋放你內在的無限活力！你的攻擊力瞬間提升十倍，並能無視一切防禦！', 'keywords': 'inner energy burst', 'photo_url': 'https://images.unsplash.com/photo-1548613053-22087dd8edb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDYzODh8MHwxfHNlYXJjaHwxfHxpbm5lciUyMGVuZXJneSUyMGJ1cnN0fGVufDB8MXx8fDE3MzkyODIyMDJ8MA&ixlib=rb-4.0.3&q=80&w=1080' }]
 
 
 const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
@@ -74,11 +74,13 @@ function App() {
     "你對目前的工作或學業有什麼想法？"
   ];
 
+  // const [tarotCards, setTarotCards] = useState<CardT[]>(testCards)
   const [tarotCards, setTarotCards] = useState<CardT[]>([])
   const [question, setQuestion] = useState<string>("")
   const [interpretation, setInterpretation] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [showI, setShowI] = useState<boolean>(true)
+  const [isStreamTextDone, setIsStreamTextDone] = useState<boolean>(false);
 
   const getRandCards = (question0: string) => {
     setQuestion(question0)
@@ -119,23 +121,24 @@ function App() {
 
   return (
     <div className=' w-full h-screen relative pt-16'>
-      <div className=' px-[6%] sm:px-[min(12rem,12%)]'>
-        <GradientText
-          colors={["#3b31ff", "#FF94B4", "#FF3232"]}
-          animationSpeed={3}
-          showBorder={false}
-        >
-          <h1 className=' text-center text-5xl my-1 md:text-6xl font-extrabold'>Arcana</h1>
-          <h2 className=' text-center text-lg  my-1 md:text-xl tracking-widest'>Generative Tarot</h2>
-        </GradientText>
+      {tarotCards.length == 0 &&
+        <div className=' px-[6%] sm:px-[min(12rem,12%)]'>
+          <GradientText
+            colors={["#3b31ff", "#FF94B4", "#FF3232"]}
+            animationSpeed={3}
+            showBorder={false}
+          >
+            <h1 className=' text-center text-5xl my-1 md:text-6xl font-extrabold'>Arcana</h1>
+            <h2 className=' text-center text-lg  my-1 md:text-xl tracking-widest'>Generative Tarot</h2>
+          </GradientText>
 
-        <div className=' flex flex-col items-center mt-12 space-y-4'>
-          <StreamText className=' text-white ' text='Generative Tarot' texts={fortuneTellingQuestions}></StreamText>
-          <QuestionForm onSubmit={getRandCards}></QuestionForm>
-          <h2 className=' text-center text-sm md:text-lg tracking-wider text-white'>Click <TablerCardsFilled className=' inline-block text-base'/> to generate your own card combination</h2>
+          <div className=' flex flex-col items-center mt-12 space-y-4'>
+            <StreamText className=' text-white ' text='Generative Tarot' texts={fortuneTellingQuestions}></StreamText>
+            <QuestionForm onSubmit={getRandCards}></QuestionForm>
+            <h2 className=' text-center text-sm md:text-lg tracking-wider text-white'>Click <TablerCardsFilled className=' inline-block text-base' /> to generate your own card combination</h2>
+          </div>
         </div>
-      </div>
-
+      }
       <div className=' absolute top-0 w-full h-full left-0 right-0 -z-10 pointer-events-none'>
         <Aurora
           colorStops={["#2d0070", "#290099", "#6117ab"]}
@@ -150,17 +153,18 @@ function App() {
         <>
           < CardArea getCardsinterpretation={getCardsinterpretation} tarotCards={tarotCards}></CardArea>
           {!interpretation &&
-            <div className=' w-full px-10 z-[60] absolute top-72'>
-              <StreamText className=' text-white h-fit ' text={"滑動卡牌上半部檢視卡牌，點擊卡牌下半部翻開卡牌，選擇 3 張卡牌並翻開！"} texts={[]} speed={100}></StreamText>
+            <div className=' w-full px-10 z-[60] fixed top-72'>
+              <StreamText className=' text-white h-fit ' text={"滑動卡牌挑選喜歡的牌並雙擊翻開！"} texts={[]} speed={100}></StreamText>
             </div>
           }
         </>
       }
       {
-        (interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/30 p-4 rounded-md overflow-y-auto no-scrollbar backdrop-blur-xs `}>
-          <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={50}></StreamText>
+        (interpretation) && <> <div className={` ${showI ? "opacity-100 " : "opacity-0 "} fixed top-10 left-10 right-10 max-h-72 bg-white/4 p-4 rounded-md overflow-y-auto no-scrollbar backdrop-blur-sm `}>
+          <StreamText className=' text-white h-fit ' text={interpretation} texts={[]} speed={40} onComplete={() => setIsStreamTextDone(true)} complete={isStreamTextDone}></StreamText>
         </div>
-          <button className=' !bg-white/90 !text-black inline-block z-50 absolute right-5 top-5 text-xs !py-1 !px-3 ' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
+          <button className=' !bg-black/30 !text-white inline-block z-50 fixed right-3 top-3 text-xs !py-1 !px-3 backdrop-blur-xs' onClick={() => setShowI(!showI)}>{showI ? "hide" : "show"}</button>
+          <button className=' !bg-black/30 !text-white inline-block z-50 fixed left-3 top-3 text-xs !py-1 !px-3 backdrop-blur-xs' onClick={() => location.reload()}>again</button>
         </>
       }
       {

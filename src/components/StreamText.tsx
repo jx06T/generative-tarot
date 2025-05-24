@@ -61,8 +61,8 @@ function StreamText({
                 } else {
                     state.isDeleting = true;
                     if (texts.length == 0) {
-                        console.log("dd")
                         clearInterval(timer)
+                        if (onComplete) onComplete();
                     }
                 }
             } else {
@@ -88,7 +88,7 @@ function StreamText({
         <div className={className}>
             {complete ?
                 <div key={0} className="whitespace-pre-wrap">
-                    {text || text[0]}
+                    {text.replaceAll('\n\n', '\n') || text[0].replaceAll('\n\n', '\n')}
                 </div> :
                 displayedText.map((line, index) => (
                     <div key={index} className="whitespace-pre-wrap">
