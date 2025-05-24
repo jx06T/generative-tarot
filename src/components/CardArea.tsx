@@ -28,7 +28,7 @@ function CardArea({ getCardsinterpretation, tarotCards }: CardAreaProps) {
     // Initialize cards and handle window resize
     useEffect(() => {
         setCards(
-            Array(30)
+            Array(22)
                 .fill({
                     cardChineseName: "",
                     cardEnglishName: "",
